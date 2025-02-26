@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "530791958380",
+    "project_id": "my-melody-craft",
+    "storage_bucket": "my-melody-craft.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530791958380:android:75f66d1edb9b3dc8471549",
+        "android_client_info": {
+          "package_name": "com.example.melodycraft"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkdADEPhmuhyTlwO2M_CiqtZhOxnslT9w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
