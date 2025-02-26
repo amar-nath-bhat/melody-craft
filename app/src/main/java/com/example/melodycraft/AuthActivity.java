@@ -78,6 +78,7 @@ public class AuthActivity extends AppCompatActivity {
 
         Intent signInIntent = AuthUI.getInstance()
                 .createSignInIntentBuilder()
+                .setIsSmartLockEnabled(false)
                 .setTheme(R.style.Theme_MelodyCraft)
                 .setAvailableProviders(providers)
                 .build();

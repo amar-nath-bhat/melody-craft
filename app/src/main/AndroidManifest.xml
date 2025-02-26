@@ -11,11 +11,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MelodyCraft">
         <activity
-            android:name=".ProfileActivity"
-            android:exported="false" />
+            android:name=".ProfileActivity" />
         <activity
-            android:name=".AuthActivity"
-            android:exported="false" />
+            android:name=".AuthActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
