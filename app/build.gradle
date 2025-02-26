@@ -38,6 +38,7 @@ dependencies {
     implementation libs.firebase.auth
     implementation libs.credentials
     implementation libs.credentials.play.services.auth
+    implementation libs.material.v190
     implementation libs.googleid
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
