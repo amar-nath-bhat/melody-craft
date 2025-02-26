@@ -31,10 +31,12 @@ public class MainActivity extends AppCompatActivity {
                 .setTopRightCornerSize(50)
                 .build());
         navigationView.setBackground(materialShapeDrawable);
+        navigationView.setSelectedItemId(R.id.explore);
         navigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
+                finish();
             }
             return true;
         });

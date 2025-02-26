@@ -1,24 +1,29 @@
 package com.example.melodycraft.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.example.melodycraft.AuthActivity;
-import com.example.melodycraft.MainActivity;
-import com.example.melodycraft.ProfileActivity;
 import com.example.melodycraft.R;
+import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.Objects;
 
 public class ProfileFragment extends Fragment {
 
@@ -52,6 +57,14 @@ public class ProfileFragment extends Fragment {
         MaterialButton updatePasswordButton = view.findViewById(R.id.update_password_button);
         MaterialButton deleteUserButton = view.findViewById(R.id.delete_user_button);
         MaterialButton logoutButton = view.findViewById(R.id.logout_button);
+        MaterialButton toggleThemeButton = view.findViewById(R.id.toggle_theme_button);
+
+        ImageView profileImage = view.findViewById(R.id.profile_image);
+        String profileImageUrl = "https://ui-avatars.com/api/?background=random&name=" + Objects.requireNonNull(mAuth.getCurrentUser()).getDisplayName();
+        Glide.with(requireContext())
+                .load(profileImageUrl)
+                .circleCrop()
+                .into(profileImage);
 
         // Set current user data
         FirebaseUser user = mAuth.getCurrentUser();
@@ -65,10 +78,16 @@ public class ProfileFragment extends Fragment {
         updatePasswordButton.setOnClickListener(v -> updatePassword());
         deleteUserButton.setOnClickListener(v -> deleteUser());
         logoutButton.setOnClickListener(v -> logout());
+        toggleThemeButton.setOnClickListener(v -> {
+            SharedPreferences prefs = requireContext().getSharedPreferences("theme", Context.MODE_PRIVATE);
+            boolean isDarkMode = prefs.getBoolean("isDarkMode", false);
+            prefs.edit().putBoolean("isDarkMode", !isDarkMode).apply();
+            requireActivity().recreate();
+        });
     }
 
     private void updateEmail() {
-        String newEmail = emailField.getText().toString().trim();
+        String newEmail = Objects.requireNonNull(emailField.getText()).toString().trim();
         if (newEmail.isEmpty()) {
             emailField.setError("Email cannot be empty");
             return;
@@ -87,7 +106,7 @@ public class ProfileFragment extends Fragment {
     }
 
     private void updatePassword() {
-        String newPassword = passwordField.getText().toString().trim();
+        String newPassword = Objects.requireNonNull(passwordField.getText()).toString().trim();
         if (newPassword.isEmpty()) {
             passwordField.setError("Password cannot be empty");
             return;
@@ -112,20 +131,27 @@ public class ProfileFragment extends Fragment {
             user.delete().addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {
                     showToast("User account deleted");
-                    startActivity(new Intent(requireContext(), AuthActivity.class));
+                    Intent intent = new Intent(requireContext(), AuthActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
                     requireActivity().finish();
                 } else {
-                    showToast("Failed to delete user: " + task.getException().getMessage());
+                    showToast("Failed to delete user: " + Objects.requireNonNull(task.getException()).getMessage());
                 }
             });
         }
     }
 
     private void logout() {
-        FirebaseAuth.getInstance().signOut();
-        Intent intent = new Intent(requireContext(), MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
+        AuthUI.getInstance()
+                .signOut(requireContext())
+                .addOnCompleteListener(task -> {
+                    Intent intent = new Intent(requireContext(), AuthActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    requireActivity().finish();
+                });
+
     }
 
     private void showToast(String message) {

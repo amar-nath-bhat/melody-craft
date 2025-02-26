@@ -5,12 +5,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
+import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import java.util.Arrays;
@@ -56,36 +59,43 @@ public class AuthActivity extends AppCompatActivity {
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
 
-        // Create and launch sign-in intent
-        ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
-                new FirebaseAuthUIActivityResultContract(),
-                (result) -> {
-                    IdpResponse response = result.getIdpResponse();
-                    if (result.getResultCode() == RESULT_OK) {
-                        // Successfully signed in
-                        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                        startActivity(new Intent(this, MainActivity.class));
-                        finish();
-                    } else {
-                        // Sign in failed
-                        if (response == null) {
-                            // User pressed back button
-                            finish();
-                        }
-                    }
-                });
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
+                        .setTheme(R.style.Theme_MelodyCraft)
+                        .setAvailableProviders(providers)
+                        .build(),
+                RC_SIGN_IN);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            onSignInResult(resultCode, data);
+            return;
+        }
+        Log.d("AuthActivity", "onActivityResult: requestCode=" + requestCode + ", resultCode=" + resultCode);
+    }
 
-        Intent signInIntent = AuthUI.getInstance()
-                .createSignInIntentBuilder()
-                .setIsSmartLockEnabled(false)
-                .setTheme(R.style.Theme_MelodyCraft)
-                .setAvailableProviders(providers)
-                .build();
-        //                                                                                                     java.lang.IllegalArgumentException: com.example.melodycraft: Targeting U+ (version 34 and above) disallows creating or retrieving a PendingIntent with FLAG_MUTABLE, an implicit Intent within and without FLAG_NO_CREATE and FLAG_ALLOW_UNSAFE_IMPLICIT_INTENT for security reasons. To retrieve an already existing PendingIntent, use FLAG_NO_CREATE, however, to create a new PendingIntent with an implicit Intent use FLAG_IMMUTABLE.
-
-        // to fix the error above, we need to add the following line of code:
-        signInIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        signInLauncher.launch(signInIntent);
+    private void onSignInResult(int resultCode, Intent data) {
+        IdpResponse response = IdpResponse.fromResultIntent(data);
+        Log.d("AuthActivity", "onSignInResult: resultCode=" + resultCode + ", response=" + response);
+        if (resultCode == RESULT_OK) {
+            // Successfully signed in
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            if (user != null) {
+                startActivity(new Intent(this, MainActivity.class));
+                finish();
+            }
+        } else {
+            // Sign in failed
+            if (response == null) {
+                // User pressed back button
+                return;
+            }
+            Log.e("AuthActivity", "Sign-in error: ", response.getError());
+        }
     }
 }
