@@ -11,7 +11,7 @@
     <item
         android:id="@+id/recent"
         android:title="@string/recent"
-        android:icon="@drawable/recent"
+        android:icon="@drawable/history"
         app:showAsAction="ifRoom" />
 
     <item
