@@ -5,4 +5,6 @@
     <color name="dark_blue">#090A43</color>
     <color name="light_gray">#BBBEDD</color>
     <color name="purple">#321D86</color>
+    <color name="dark_purple">#3829A0</color>
+    <color name="dark_gray_transparent">#80212121</color>
 </resources>

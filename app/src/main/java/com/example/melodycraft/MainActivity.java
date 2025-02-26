@@ -1,5 +1,6 @@
 package com.example.melodycraft;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -8,6 +9,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -21,7 +23,22 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
+        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.explore) {
+                startActivity(new Intent(MainActivity.this, ExploreActivity.class));
+                return true;
+            } else if (itemId == R.id.recent) {
+                startActivity(new Intent(MainActivity.this, RecentActivity.class));
+                return true;
+            }
+            return false;
+        });
+
     }
+
+
 
     @Override
     public void onStart() {

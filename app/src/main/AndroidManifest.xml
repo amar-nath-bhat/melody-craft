@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MelodyCraft"
         tools:targetApi="31">
         <activity
+            android:name=".RecentActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExploreActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
