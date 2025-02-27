@@ -1,5 +1,7 @@
 [versions]
 agp = "8.8.1"
+firebaseBom = "33.9.0"
+fragment = "1.5.7"
 firebaseUiAuth = "8.0.2"
 glide = "4.16.0"
 junit = "4.13.2"
@@ -19,6 +21,10 @@ navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
 
 [libraries]
+com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
+fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
+google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
 firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }

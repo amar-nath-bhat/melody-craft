@@ -1,6 +1,7 @@
 package com.example.melodycraft;
 
 import android.content.Intent;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
@@ -10,6 +11,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,6 +39,12 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
                 finish();
+            } else if (itemId == R.id.explore) {
+                startActivity(new Intent(MainActivity.this, ExploreActivity.class));
+                return true;
+            } else if (itemId == R.id.recent) {
+                startActivity(new Intent(MainActivity.this, RecentActivity.class));
+                return true;
             }
             return true;
         });
@@ -44,6 +52,8 @@ public class MainActivity extends AppCompatActivity {
         // Initialize Firebase Auth
         mAuth = FirebaseAuth.getInstance();
     }
+
+
 
     @Override
     public void onStart() {

@@ -34,8 +34,11 @@ public class ProfileActivity extends AppCompatActivity {
         navigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.explore) {
-                startActivity(new Intent(this, MainActivity.class));
+                startActivity(new Intent(this, ExploreActivity.class));
                 finish();
+            } else if (itemId == R.id.recent) {
+                startActivity(new Intent(this, RecentActivity.class));
+                return true;
             }
             return true;
         });
