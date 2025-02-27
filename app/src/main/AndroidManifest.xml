@@ -15,11 +15,9 @@
         <activity
             android:name=".AuthActivity" />
         <activity
-            android:name=".RecentActivity"
-            android:exported="false" />
+            android:name=".RecentActivity" />
         <activity
-            android:name=".ExploreActivity"
-            android:exported="false" />
+            android:name=".ExploreActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">

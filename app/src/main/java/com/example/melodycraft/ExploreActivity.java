@@ -1,10 +1,13 @@
 package com.example.melodycraft;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class ExploreActivity extends AppCompatActivity {
 
@@ -16,6 +19,19 @@ public class ExploreActivity extends AppCompatActivity {
         addMusicBannerFragment();
         addSongsFragment();
 
+        BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
+        navigationView.setSelectedItemId(R.id.explore);
+        navigationView.setOnItemSelectedListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.profile) {
+                startActivity(new Intent(this, ProfileActivity.class));
+                finish();
+            } else if (itemId == R.id.recent) {
+                startActivity(new Intent(this, RecentActivity.class));
+                return true;
+            }
+            return true;
+        });
     }
     private void addMusicBannerFragment() {
         MusicBannerFragment musicBannerFragment = new MusicBannerFragment();

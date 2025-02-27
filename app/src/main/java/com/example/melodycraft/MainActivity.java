@@ -39,25 +39,18 @@ public class MainActivity extends AppCompatActivity {
             if (itemId == R.id.profile) {
                 startActivity(new Intent(this, ProfileActivity.class));
                 finish();
-            }
-            return true;
-        });
-
-        // Initialize Firebase Auth
-        mAuth = FirebaseAuth.getInstance();
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
-        bottomNavigationView.setOnItemSelectedListener(item -> {
-            int itemId = item.getItemId();
-            if (itemId == R.id.explore) {
+            } else if (itemId == R.id.explore) {
                 startActivity(new Intent(MainActivity.this, ExploreActivity.class));
                 return true;
             } else if (itemId == R.id.recent) {
                 startActivity(new Intent(MainActivity.this, RecentActivity.class));
                 return true;
             }
-            return false;
+            return true;
         });
 
+        // Initialize Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
     }
 
 

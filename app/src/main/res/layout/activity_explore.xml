@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ExploreActivity"
-    android:background="@color/purple">
+    android:background="@color/md_theme_background">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -51,7 +51,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@drawable/bottom_nav_bg"
         app:itemIconTint="#1A237E"
         app:itemTextColor="#1A237E"
         app:menu="@menu/bottom_nav_menu"
