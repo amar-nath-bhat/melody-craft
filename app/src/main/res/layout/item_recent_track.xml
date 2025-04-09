@@ -7,54 +7,123 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp">
 
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:padding="16dp">-->
+
+<!--        <View-->
+<!--            android:id="@+id/thumbnail"-->
+<!--            android:layout_width="48dp"-->
+<!--            android:layout_height="48dp"-->
+<!--            android:layout_marginEnd="16dp"-->
+<!--            android:background="@android:color/darker_gray" />-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_weight="1"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/song_name"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Song Name"-->
+<!--                android:textAppearance="?attr/textAppearanceTitleMedium" />-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/genre"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="Genre"-->
+<!--                android:textAppearance="?attr/textAppearanceBodyMedium" />-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/backing_chords"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="Backing Chords"-->
+<!--                android:textAppearance="?attr/textAppearanceBodySmall" />-->
+
+<!--            <com.google.android.material.textview.MaterialTextView-->
+<!--                android:id="@+id/duration"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:text="Duration"-->
+<!--                android:textAppearance="?attr/textAppearanceBodySmall" />-->
+<!--        </LinearLayout>-->
+<!--    </LinearLayout>-->
+<!--    instead make it flex row and then flex col justify between -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:padding="16dp">
-
         <View
             android:id="@+id/thumbnail"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_marginEnd="16dp"
             android:background="@android:color/darker_gray" />
-
         <LinearLayout
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:orientation="vertical">
-
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/song_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Song Name"
                 android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/genre"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Genre"
-                android:textAppearance="?attr/textAppearanceBodyMedium" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/backing_chords"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Backing Chords"
-                android:textAppearance="?attr/textAppearanceBodySmall" />
-
+                android:layout_gravity="center_vertical"
+                android:orientation="horizontal">
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/genre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_gravity="center_vertical"
+                    android:text="Genre"
+                    android:textAppearance="?attr/textAppearanceBodyMedium" />
+                <com.google.android.material.divider.MaterialDivider
+                    android:layout_width="1dp"
+                    android:layout_height="14dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical"
+                    app:dividerColor="?attr/colorOnSurface" />
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/backing_chords"
+                    android:layout_width="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_height="wrap_content"
+                    android:text="Backing Chords"
+                    android:layout_marginTop="4dp"
+                    android:textAppearance="?attr/textAppearanceBodySmall" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="end">
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/duration"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="Duration"
+                android:layout_gravity="end"
                 android:textAppearance="?attr/textAppearanceBodySmall" />
         </LinearLayout>
     </LinearLayout>

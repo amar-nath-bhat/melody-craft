@@ -14,6 +14,7 @@ import com.example.melodycraft.models.Track;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
+import java.util.Random;
 
 public class RecentTracksAdapter extends RecyclerView.Adapter<RecentTracksAdapter.TrackViewHolder> {
 
@@ -36,11 +37,16 @@ public class RecentTracksAdapter extends RecyclerView.Adapter<RecentTracksAdapte
         holder.songName.setText(track.getSongName());
         holder.genre.setText(track.getGenre());
         holder.backingChords.setText(track.getBackingChords());
+        holder.duration.setText(String.format("%d:%02d", track.getDuration() / 60, track.getDuration() % 60));
 
         // Generate a thumbnail using the song name
         GradientDrawable thumbnail = new GradientDrawable();
         thumbnail.setShape(GradientDrawable.OVAL);
-        thumbnail.setColor(Color.parseColor("#" + Integer.toHexString(track.getSongName().hashCode()).substring(0, 6)));
+        // color gradient based on songname randomly generated
+        Random random = new Random(track.getSongName().hashCode());
+        int color1 = Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        int color2 = Color.rgb(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+        thumbnail.setColors(new int[]{color1, color2});
         holder.thumbnail.setBackground(thumbnail);
     }
 
