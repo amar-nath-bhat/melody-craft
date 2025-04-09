@@ -44,6 +44,9 @@ public class ProfileActivity extends AppCompatActivity {
             } else if (itemId == R.id.generate) {
                 startActivity(new Intent(this, GenerateActivity.class));
                 finish();
+            } else if (itemId == R.id.player) {
+                startActivity(new Intent(this, PlayerActivity.class));
+                finish();
             }
             return true;
         });

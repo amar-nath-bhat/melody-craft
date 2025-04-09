@@ -59,7 +59,7 @@ public class HomeFragment extends Fragment {
         // Simulate fetching data
         List<Track> tracks = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
-            tracks.add(new Track("Song " + (i + 1), "Genre " + (i % 3), "C G Am F", 4, 120));
+            tracks.add(new Track("Song " + (i + 1), "Genre " + (i % 3), "C G Am F", 4, 120, "song" + (i + 1) + ".mid"));
         }
         adapter.updateTracks(tracks);
 
@@ -124,7 +124,8 @@ public class HomeFragment extends Fragment {
                         trackJson.getString("genre"),
                         trackJson.getString("backing_chords"),
                         trackJson.getInt("steps_per_chord"),
-                        trackJson.getInt("qpm")
+                        trackJson.getInt("qpm"),
+                        trackJson.getString("file_name")
                 );
                 tracks.add(track);
             }

@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.melodycraft.ui.HomeFragment;
-import com.example.melodycraft.ui.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.shape.MaterialShapeDrawable;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             } else if (itemId == R.id.generate) {
                 startActivity(new Intent(this, GenerateActivity.class));
+                finish();
+            } else if (itemId == R.id.player) {
+                startActivity(new Intent(this, PlayerActivity.class));
                 finish();
             }
             return true;
