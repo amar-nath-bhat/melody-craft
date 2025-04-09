@@ -164,7 +164,11 @@ public class GenerateFragment extends Fragment {
 
     private void setupGenerateButton(View view) {
         view.findViewById(R.id.generate_button).setOnClickListener(v -> {
+            view.findViewById(R.id.generate_button).setEnabled(false);
             generateMusic();
+            view.postDelayed(() -> {
+                view.findViewById(R.id.generate_button).setEnabled(true);
+            }, 2000); // 2 seconds delay
         });
     }
 
@@ -174,6 +178,7 @@ public class GenerateFragment extends Fragment {
             return;
         }
 
+        // Disable the button to prevent multiple clicks
         float duration = durationSlider.getValue();
         int numChords = backingChords.size();
         int stepsPerQuarter = 4;
