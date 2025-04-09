@@ -80,8 +80,8 @@ public class ProfileFragment extends Fragment {
         logoutButton.setOnClickListener(v -> logout());
         toggleThemeButton.setOnClickListener(v -> {
             SharedPreferences prefs = requireContext().getSharedPreferences("theme", Context.MODE_PRIVATE);
-            boolean isDarkMode = prefs.getBoolean("isDarkMode", false);
-            prefs.edit().putBoolean("isDarkMode", !isDarkMode).apply();
+            boolean isDarkMode = prefs.getBoolean("dark_mode", false);
+            prefs.edit().putBoolean("dark_mode", !isDarkMode).apply();
             requireActivity().recreate();
         });
     }

@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.melodycraft.ui.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.shape.MaterialShapeDrawable;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -27,15 +28,22 @@ public class ProfileActivity extends AppCompatActivity {
         }
 
         BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
+        MaterialShapeDrawable materialShapeDrawable = (MaterialShapeDrawable) navigationView.getBackground();
+        materialShapeDrawable.setShapeAppearanceModel(materialShapeDrawable.getShapeAppearanceModel()
+                .toBuilder()
+                .setTopLeftCornerSize(50)
+                .setTopRightCornerSize(50)
+                .build());
+        navigationView.setBackground(materialShapeDrawable);
         navigationView.setSelectedItemId(R.id.profile);
         navigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.explore) {
-                startActivity(new Intent(this, ExploreActivity.class));
+            if (itemId == R.id.home) {
+                startActivity(new Intent(this, MainActivity.class));
                 finish();
-            } else if (itemId == R.id.recent) {
-                startActivity(new Intent(this, RecentActivity.class));
-                return true;
+            } else if (itemId == R.id.generate) {
+                startActivity(new Intent(this, GenerateActivity.class));
+                finish();
             }
             return true;
         });

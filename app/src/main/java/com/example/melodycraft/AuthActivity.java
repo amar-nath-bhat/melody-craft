@@ -1,12 +1,14 @@
 package com.example.melodycraft;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -41,6 +43,9 @@ public class AuthActivity extends AppCompatActivity {
             // not signed in
             createSignInIntent();
         }
+
+        // Apply theme
+        applyTheme();
     }
 
     private void createSignInIntent() {
@@ -53,7 +58,7 @@ public class AuthActivity extends AppCompatActivity {
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setIsSmartLockEnabled(false)
-                        .setTheme(R.style.Theme_MelodyCraft)
+                        .setTheme(R.style.AppTheme)
                         .setAvailableProviders(providers)
                         .build(),
                 RC_SIGN_IN);
@@ -87,5 +92,11 @@ public class AuthActivity extends AppCompatActivity {
             }
             Log.e("AuthActivity", "Sign-in error: ", response.getError());
         }
+    }
+
+    private void applyTheme() {
+        SharedPreferences sharedPreferences = getSharedPreferences("theme", MODE_PRIVATE);
+        boolean isDarkMode = sharedPreferences.getBoolean("dark_mode", false);
+        AppCompatDelegate.setDefaultNightMode(isDarkMode ? AppCompatDelegate.MODE_NIGHT_YES : AppCompatDelegate.MODE_NIGHT_NO);
     }
 }
