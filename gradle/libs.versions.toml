@@ -1,7 +1,6 @@
 [versions]
 agp = "8.8.1"
-firebaseBom = "33.9.0"
-fragment = "1.5.7"
+androidMidiLib = "f8f2a6645"
 firebaseUiAuth = "8.0.2"
 glide = "4.16.0"
 junit = "4.13.2"
@@ -21,10 +20,7 @@ navigationFragment = "2.6.0"
 navigationUi = "2.6.0"
 
 [libraries]
-com-google-firebase-firebase-auth = { module = "com.google.firebase:firebase-auth" }
-firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebaseBom" }
-fragment = { module = "androidx.fragment:fragment", version.ref = "fragment" }
-google-firebase-auth = { module = "com.google.firebase:firebase-auth" }
+android-midi-lib = { module = "com.github.LeffelMania:android-midi-lib", version.ref = "androidMidiLib" }
 firebase-ui-auth = { module = "com.firebaseui:firebase-ui-auth", version.ref = "firebaseUiAuth" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -45,4 +41,3 @@ navigation-ui = { group = "androidx.navigation", name = "navigation-ui", version
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 google-gms-google-services = { id = "com.google.gms.google-services", version.ref = "googleGmsGoogleServices" }
-
