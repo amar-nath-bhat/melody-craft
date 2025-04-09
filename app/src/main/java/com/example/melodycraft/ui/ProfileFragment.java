@@ -28,7 +28,8 @@ import java.util.Objects;
 public class ProfileFragment extends Fragment {
 
     private FirebaseAuth mAuth;
-    private TextInputEditText emailField, passwordField, nameField;
+    private TextInputEditText emailField;
+    private TextInputEditText passwordField;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -52,7 +53,7 @@ public class ProfileFragment extends Fragment {
         // Initialize views
         emailField = view.findViewById(R.id.email);
         passwordField = view.findViewById(R.id.password);
-        nameField = view.findViewById(R.id.name);
+        TextInputEditText nameField = view.findViewById(R.id.name);
         MaterialButton updateEmailButton = view.findViewById(R.id.update_email_button);
         MaterialButton updatePasswordButton = view.findViewById(R.id.update_password_button);
         MaterialButton deleteUserButton = view.findViewById(R.id.delete_user_button);

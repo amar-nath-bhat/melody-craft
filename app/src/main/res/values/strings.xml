@@ -23,4 +23,5 @@
     <string name="add_chord">Add Chord</string>
     <string name="duration">Duration</string>
     <string name="generate_music">Generate Music</string>
+    <string name="melodycraft_banner">MelodyCraft Banner</string>
 </resources>

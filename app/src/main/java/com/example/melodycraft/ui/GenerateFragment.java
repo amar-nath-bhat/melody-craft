@@ -19,13 +19,14 @@ import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.chromium.net.CronetEngine;
 import org.chromium.net.CronetException;
 import org.chromium.net.UploadDataProviders;
 import org.chromium.net.UrlRequest;
 import org.chromium.net.UrlResponseInfo;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -37,6 +38,8 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
 public class GenerateFragment extends Fragment {
+    private FirebaseAuth mAuth;
+
     private AutoCompleteTextView genreDropdown;
     private ChipGroup melodyChipGroup;
     private ChipGroup chordChipGroup;
@@ -56,6 +59,12 @@ public class GenerateFragment extends Fragment {
             "Cm", "Dm", "Em", "Fm", "Gm", "Am", "Bm",
             "Cmaj7", "Dm7", "Em7", "Fmaj7", "G7", "Am7", "Bm7b5"
     };
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -187,7 +196,9 @@ public class GenerateFragment extends Fragment {
         int stepsPerChord = Math.round(product / qpm);
 
         JSONObject params = new JSONObject();
+        FirebaseUser user = mAuth.getCurrentUser();
         try {
+            params.put("user_id", user != null ? user.getUid() : "guest");
             if (!TextUtils.isEmpty(genreDropdown.getText())) {
                 params.put("genre", genreDropdown.getText().toString());
             }
