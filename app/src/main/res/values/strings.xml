@@ -4,7 +4,6 @@
     <string name="recent">Recent</string>
     <string name="search">Search</string>
     <string name="profile">Profile</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
@@ -15,4 +14,7 @@
     <string name="logout">Logout</string>
     <string name="profile_image">Profile Image</string>
     <string name="toggle_theme">Toggle Theme</string>
+    <string name="floating_action">Floating Action</string>
+    <string name="dolby_atmos">Dolby Atmos</string>
+    <string name="add_song">Add Song</string>
 </resources>

@@ -15,6 +15,10 @@
         <activity
             android:name=".AuthActivity" />
         <activity
+            android:name=".RecentActivity" />
+        <activity
+            android:name=".ExploreActivity" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

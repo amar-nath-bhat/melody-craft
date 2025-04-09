@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:background="@drawable/song_item_bg"
+    android:padding="12dp"
+    android:layout_marginBottom="8dp">
+
+    <!-- Song Icon -->
+    <ImageView
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:src="@drawable/ic_music_note"
+        android:layout_marginEnd="10dp"
+        app:tint="@color/white" />
+
+    <!-- Song Details -->
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/song_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Song Title"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/song_artist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Artist Name"
+            android:textSize="14sp"
+            android:textColor="@color/light_gray"/>
+    </LinearLayout>
+
+    <!-- Play Button -->
+    <ImageView
+        android:id="@+id/play_button"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/play"
+        app:tint="@color/white" />
+</LinearLayout>
