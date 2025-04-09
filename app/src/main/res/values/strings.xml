@@ -16,4 +16,11 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="generate_melody_text">Create beautiful melody in seconds</string>
+    <string name="genre">Genre</string>
+    <string name="primer_melodies">Primer Melodies</string>
+    <string name="add_melody">Add Melody</string>
+    <string name="backing_chords">Backing Chords</string>
+    <string name="add_chord">Add Chord</string>
+    <string name="duration">Duration</string>
+    <string name="generate_music">Generate Music</string>
 </resources>

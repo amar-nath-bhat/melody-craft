@@ -19,12 +19,21 @@ import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.slider.Slider;
 
+import org.chromium.net.CronetEngine;
+import org.chromium.net.CronetException;
+import org.chromium.net.UploadDataProviders;
+import org.chromium.net.UrlRequest;
+import org.chromium.net.UrlResponseInfo;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 public class GenerateFragment extends Fragment {
     private AutoCompleteTextView genreDropdown;
@@ -34,6 +43,8 @@ public class GenerateFragment extends Fragment {
     private TextView durationText;
     private List<Integer> primerMelodies = new ArrayList<>();
     private List<String> backingChords = new ArrayList<>();
+    private final Executor executor = Executors.newSingleThreadExecutor();
+
 
     private static final String[] PRESET_GENRES = {
             "Indie Pop", "Rock", "Jazz", "Classical", "Electronic", "Hip Hop"
@@ -90,7 +101,7 @@ public class GenerateFragment extends Fragment {
         durationSlider.addOnChangeListener((slider, value, fromUser) -> {
             updateDurationText(value);
         });
-        durationSlider.setValue(120);
+        durationSlider.setValue(30);
     }
 
     private void showMelodyInputDialog() {
@@ -156,14 +167,11 @@ public class GenerateFragment extends Fragment {
     }
 
     private void generateMusic() {
-        // Calculate QPM and steps_per_chord based on duration
         float duration = durationSlider.getValue();
         int numChords = backingChords.size();
-        int stepsPerQuarter = 4; // Standard value
-
-        // Rearrange the formula to solve for QPM × steps_per_chord
+        int stepsPerQuarter = 4;
         float product = (numChords * 60) / (duration * stepsPerQuarter);
-        int qpm = 90; // Default tempo
+        int qpm = 90;
         int stepsPerChord = Math.round(product / qpm);
 
         JSONObject params = new JSONObject();
@@ -174,9 +182,83 @@ public class GenerateFragment extends Fragment {
             params.put("qpm", qpm);
             params.put("steps_per_chord", stepsPerChord);
 
-            // TODO: Send params to your music generation API
+            String url = "https://api.example.com/generate";
+            CronetEngine.Builder builder = new CronetEngine.Builder(requireContext());
+            CronetEngine cronetEngine = builder.build();
+
+            UrlRequest.Builder requestBuilder = cronetEngine.newUrlRequestBuilder(
+                    url, new UrlRequest.Callback() {
+                        private final ByteArrayOutputStream bytesReceived = new ByteArrayOutputStream();
+                        private String responseString;
+
+                        @Override
+                        public void onRedirectReceived(UrlRequest request, UrlResponseInfo info, String newLocationUrl) {
+                            request.followRedirect();
+                        }
+
+                        @Override
+                        public void onResponseStarted(UrlRequest request, UrlResponseInfo info) {
+                            if (info.getHttpStatusCode() != 200) {
+                                request.cancel();
+                                requireActivity().runOnUiThread(() ->
+                                        showError("Server returned: " + info.getHttpStatusCode()));
+                                return;
+                            }
+                            request.read(ByteBuffer.allocateDirect(32 * 1024));
+                        }
+
+                        @Override
+                        public void onReadCompleted(UrlRequest request, UrlResponseInfo info, ByteBuffer byteBuffer) {
+                            byteBuffer.flip();
+                            byte[] bytes = new byte[byteBuffer.remaining()];
+                            byteBuffer.get(bytes);
+                            bytesReceived.write(bytes, 0, bytes.length);
+                            byteBuffer.clear();
+                            request.read(byteBuffer);
+                        }
+
+                        @Override
+                        public void onSucceeded(UrlRequest request, UrlResponseInfo info) {
+                            responseString = bytesReceived.toString();
+                            requireActivity().runOnUiThread(() -> handleResponse(responseString));
+                        }
+
+                        @Override
+                        public void onFailed(UrlRequest request, UrlResponseInfo info, CronetException error) {
+                            requireActivity().runOnUiThread(() ->
+                                    showError("Error: " + error.getMessage()));
+                        }
+                    }, executor);
+
+            requestBuilder.setHttpMethod("POST")
+                    .addHeader("Content-Type", "application/json")
+                    .setUploadDataProvider(
+                            UploadDataProviders.create(params.toString().getBytes()), executor);
+
+            UrlRequest request = requestBuilder.build();
+            request.start();
+
         } catch (JSONException e) {
-            e.printStackTrace();
+            showError("Error creating request: " + e.getMessage());
         }
+    }
+
+    private void handleResponse(String response) {
+        try {
+            JSONObject jsonResponse = new JSONObject(response);
+            // Handle the response here
+            // You might want to start playing the generated music
+            // or save it to a file
+        } catch (JSONException e) {
+            showError("Error parsing response: " + e.getMessage());
+        }
+    }
+
+    private void showError(String message) {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle("Error")
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .show();
     }
 }

@@ -70,7 +70,7 @@
                     style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Genre">
+                    android:hint="@string/genre">
 
                     <AutoCompleteTextView
                         android:id="@+id/genre_dropdown"
@@ -97,7 +97,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Primer Melodies"
+                    android:text="@string/primer_melodies"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -111,7 +111,7 @@
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Melody" />
+                    android:text="@string/add_melody" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -130,7 +130,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Backing Chords"
+                    android:text="@string/backing_chords"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <com.google.android.material.chip.ChipGroup
@@ -144,7 +144,7 @@
                     style="@style/Widget.Material3.Button.TextButton"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Add Chord" />
+                    android:text="@string/add_chord" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -163,7 +163,7 @@
                 <com.google.android.material.textview.MaterialTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Duration"
+                    android:text="@string/duration"
                     android:textAppearance="?attr/textAppearanceTitleMedium" />
 
                 <com.google.android.material.slider.Slider
@@ -171,15 +171,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:stepSize="1"
-                    android:valueFrom="30"
-                    android:valueTo="300" />
+                    android:valueFrom="20"
+                    android:valueTo="180" />
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/duration_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    tools:text="Duration: 120 seconds" />
+                    tools:text="Duration: 30 seconds" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
@@ -189,7 +189,7 @@
             android:layout_height="wrap_content"
             app:icon="@drawable/ic_magic_wand"
             app:iconGravity="textStart"
-            android:text="Generate Music" />
+            android:text="@string/generate_music" />
 
     </LinearLayout>
 </ScrollView>
