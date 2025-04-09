@@ -15,9 +15,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/search"
-        android:title="@string/search"
-        android:icon="@drawable/search"
+        android:id="@+id/player"
+        android:title="@string/player"
+        android:icon="@drawable/ic_music_note"
         app:showAsAction="ifRoom" />
 
     <item
