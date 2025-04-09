@@ -1,5 +1,6 @@
 package com.example.melodycraft.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -156,6 +157,7 @@ public class GenerateFragment extends Fragment {
         backingChords.add(chord);
     }
 
+    @SuppressLint("DefaultLocale")
     private void updateDurationText(float value) {
         durationText.setText(String.format("Duration: %.0f seconds", value));
     }
@@ -167,6 +169,11 @@ public class GenerateFragment extends Fragment {
     }
 
     private void generateMusic() {
+        if (genreDropdown.getText().toString().isEmpty()) {
+            showError("Please select a genre.");
+            return;
+        }
+
         float duration = durationSlider.getValue();
         int numChords = backingChords.size();
         int stepsPerQuarter = 4;
@@ -176,9 +183,15 @@ public class GenerateFragment extends Fragment {
 
         JSONObject params = new JSONObject();
         try {
-            params.put("genre", genreDropdown.getText().toString());
-            params.put("primer_melody", new JSONArray(primerMelodies));
-            params.put("backing_chords", TextUtils.join(" ", backingChords));
+            if (!TextUtils.isEmpty(genreDropdown.getText())) {
+                params.put("genre", genreDropdown.getText().toString());
+            }
+            if (!primerMelodies.isEmpty()) {
+                params.put("primer_melody", "[ " +TextUtils.join(", ", primerMelodies) + " ]");
+            }
+            if (!backingChords.isEmpty()) {
+                params.put("backing_chords", TextUtils.join(" ", backingChords));
+            }
             params.put("qpm", qpm);
             params.put("steps_per_chord", stepsPerChord);
 
