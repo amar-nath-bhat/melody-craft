@@ -211,7 +211,7 @@ public class GenerateFragment extends Fragment {
             params.put("qpm", qpm);
             params.put("steps_per_chord", stepsPerChord);
 
-            String url = "https://api.example.com/generate";
+            String url = "http://192.168.240.174:8000/generate";
             CronetEngine.Builder builder = new CronetEngine.Builder(requireContext());
             CronetEngine cronetEngine = builder.build();
 

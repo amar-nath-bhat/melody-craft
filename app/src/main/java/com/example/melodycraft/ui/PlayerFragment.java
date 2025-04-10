@@ -253,15 +253,15 @@ public class PlayerFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_player, container, false);
         initializeViews(view);
         setupListeners();
-//        loadTracks();
+        loadTracks();
         // Simulate loading tracks
-        tracks = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            tracks.add(new Track("Track " + (i + 1), "Genre " + (i % 3), "Chords", 4, 120, "song" + (i + 1) + ".mid"));
-        }
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_dropdown_item_1line, new String[]{"Track 1", "Track 2", "Track 3"});
-        trackSelector.setAdapter(adapter);
+//        tracks = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            tracks.add(new Track("Track " + (i + 1), "Genre " + (i % 3), "Chords", 4, 120, "song" + (i + 1) + ".mid"));
+//        }
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
+//                android.R.layout.simple_dropdown_item_1line, new String[]{"Track 1", "Track 2", "Track 3"});
+//        trackSelector.setAdapter(adapter);
         return view;
     }
 
@@ -325,7 +325,7 @@ public class PlayerFragment extends Fragment {
     }
 
     private void loadTracks() {
-        String url = "https://example.com/api/tracks";
+        String url = "http://192.168.240.174:8000/getAllTracks";
         CronetEngine cronetEngine = new CronetEngine.Builder(requireContext()).build();
 
         UrlRequest.Builder requestBuilder = cronetEngine.newUrlRequestBuilder(
@@ -377,7 +377,7 @@ public class PlayerFragment extends Fragment {
                 Track track = new Track(
                         trackJson.getString("song_name"),
                         trackJson.getString("genre"),
-                        trackJson.getString("backing_chords"),
+                        trackJson.getInt("total_time"),
                         trackJson.getInt("steps_per_chord"),
                         trackJson.getInt("qpm"),
                         trackJson.getString("file_name")
@@ -412,7 +412,7 @@ public class PlayerFragment extends Fragment {
 
         // Load MIDI file
         String userId = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : "guest";
-        String url = String.format("https://example.com/api/track/%s/%s/%s",
+        String url = String.format("http://192.168.240.174:8000/getTrack/%s/%s/%s",
                 userId,
                 track.getGenre(),
                 track.getFileName());

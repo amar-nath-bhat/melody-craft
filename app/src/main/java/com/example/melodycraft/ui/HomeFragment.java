@@ -55,16 +55,16 @@ public class HomeFragment extends Fragment {
         adapter = new RecentTracksAdapter(new ArrayList<>());
         recentTracksRecycler.setAdapter(adapter);
 
-//        fetchRecentTracks();
+        fetchRecentTracks();
         // Simulate fetching data
-        List<Track> tracks = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
-            tracks.add(new Track("Song " + (i + 1), "Genre " + (i % 3), "C G Am F", 4, 120, "song" + (i + 1) + ".mid"));
-        }
-        adapter.updateTracks(tracks);
-
-        // Update total tracks and favorite genre
-        totalTracks.setText(String.valueOf(tracks.size()));
+//        List<Track> tracks = new ArrayList<>();
+//        for (int i = 0; i < 10; i++) {
+//            tracks.add(new Track("Song " + (i + 1), "Genre " + (i % 3), "C G Am F", 4, 120, "song" + (i + 1) + ".mid"));
+//        }
+//        adapter.updateTracks(tracks);
+//
+//        // Update total tracks and favorite genre
+//        totalTracks.setText(String.valueOf(tracks.size()));
         String favoriteGenreText = "Pop"; // Placeholder, replace with actual logic
         favoriteGenre.setText(favoriteGenreText);
         return view;
@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
 
     private void fetchRecentTracks() {
         FirebaseUser user = mAuth.getCurrentUser();
-        String url = "https://example.com/api/recent_tracks" + "?user_id=" + (user != null ? user.getUid() : "guest");
+        String url = "http://192.168.240.174:8000/getTracks/" + (user != null ? user.getUid() : "guest");
         CronetEngine cronetEngine = new CronetEngine.Builder(requireContext()).build();
 
         UrlRequest.Builder requestBuilder = cronetEngine.newUrlRequestBuilder(
@@ -122,7 +122,7 @@ public class HomeFragment extends Fragment {
                 Track track = new Track(
                         trackJson.getString("song_name"),
                         trackJson.getString("genre"),
-                        trackJson.getString("backing_chords"),
+                        trackJson.getInt("total_time"),
                         trackJson.getInt("steps_per_chord"),
                         trackJson.getInt("qpm"),
                         trackJson.getString("file_name")
@@ -130,6 +130,8 @@ public class HomeFragment extends Fragment {
                 tracks.add(track);
             }
             adapter.updateTracks(tracks);
+            totalTracks.setText(String.valueOf(tracks.size()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

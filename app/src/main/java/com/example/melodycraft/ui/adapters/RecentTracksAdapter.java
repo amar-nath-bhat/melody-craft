@@ -36,7 +36,7 @@ public class RecentTracksAdapter extends RecyclerView.Adapter<RecentTracksAdapte
         Track track = tracks.get(position);
         holder.songName.setText(track.getSongName());
         holder.genre.setText(track.getGenre());
-        holder.backingChords.setText(track.getBackingChords());
+//        holder.backingChords.setText(track.getBackingChords());
         holder.duration.setText(String.format("%d:%02d", track.getDuration() / 60, track.getDuration() % 60));
 
         // Generate a thumbnail using the song name
@@ -62,14 +62,14 @@ public class RecentTracksAdapter extends RecyclerView.Adapter<RecentTracksAdapte
     }
 
     static class TrackViewHolder extends RecyclerView.ViewHolder {
-        MaterialTextView songName, genre, backingChords, duration;
+        MaterialTextView songName, genre, duration;
         View thumbnail;
 
         public TrackViewHolder(@NonNull View itemView) {
             super(itemView);
             songName = itemView.findViewById(R.id.song_name);
             genre = itemView.findViewById(R.id.genre);
-            backingChords = itemView.findViewById(R.id.backing_chords);
+//            backingChords = itemView.findViewById(R.id.backing_chords);
             duration = itemView.findViewById(R.id.duration);
             thumbnail = itemView.findViewById(R.id.thumbnail);
         }
