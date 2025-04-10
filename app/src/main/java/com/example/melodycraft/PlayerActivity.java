@@ -39,7 +39,7 @@ public class PlayerActivity extends AppCompatActivity {
                 .setTopRightCornerSize(50)
                 .build());
         navigationView.setBackground(materialShapeDrawable);
-        navigationView.setSelectedItemId(R.id.home);
+        navigationView.setSelectedItemId(R.id.player);
         navigationView.setOnItemSelectedListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.profile) {
